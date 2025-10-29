@@ -48,12 +48,12 @@ Simply select your birth date and instantly see your age breakdown. Perfect for 
 
 ## 📦 GitHub Repository
 
-**Repository Name:** [LogiCalc](https://github.com/MarutiNandan2796/LogiCalc)
+**Repository Name:** [LogiCalc-](https://github.com/MarutiNandan2796/LogiCalc-)
 
 Clone this repository to get started:
 ```bash
-git clone https://github.com/MarutiNandan2796/LogiCalc.git
-cd LogiCalc
+git clone https://github.com/MarutiNandan2796/LogiCalc-.git
+cd LogiCalc-
 ```
 
 ---
