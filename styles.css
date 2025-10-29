@@ -1,0 +1,91 @@
+
+/* Minimal custom styles left for small helpers */
+*{box-sizing:border-box}
+.calc-btn{padding:12px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);font-weight:600;transition:transform .05s ease, box-shadow .12s ease}
+.calc-btn:active{transform:translateY(1px)}
+.result{padding:8px 12px;border-radius:8px;background:#f8fafc;border:1px solid #eef2ff}
+
+/* toast */
+.toast-msg{background:rgba(15,23,42,0.95);color:white;padding:8px 12px;border-radius:8px;box-shadow:0 8px 24px rgba(2,6,23,0.3);margin-top:8px}
+
+/* ripple effect */
+.ripple{position:absolute;border-radius:9999px;transform:scale(0);animation:ripple .6s linear;pointer-events:none;background:rgba(0,0,0,0.12)}
+@keyframes ripple{to{transform:scale(6);opacity:0}}
+
+/* toast animations */
+.toast-enter{transform:translateY(16px);opacity:0}
+.toast-show{transform:translateY(0);opacity:1;transition:transform .18s ease,opacity .18s ease}
+
+/* history styles */
+#history-list, #history-list li{list-style:none;padding:0;margin:0}
+.history-item{padding:8px;border-radius:6px;cursor:pointer}
+.history-item:hover{background:rgba(99,102,241,0.06)}
+
+/* dark mode helpers (Tailwind will handle most, but keep body background) */
+:root{--bg:#f4f7fb}
+html.dark{background:#0b1220;color:#e6eef8}
+
+/* Colorful theme and background */
+body{
+	background: radial-gradient(1200px 600px at 10% 10%, rgba(99,102,241,0.12), transparent 8%),
+							radial-gradient(900px 500px at 90% 90%, rgba(16,185,129,0.08), transparent 10%),
+							linear-gradient(180deg,#f8fafc 0%, #eff6ff 100%);
+	min-height:100vh;
+	transition:background .3s ease;
+}
+
+/* glassy card look */
+section[id]{
+	background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.7));
+	border: 1px solid rgba(255,255,255,0.6);
+	box-shadow: 0 8px 30px rgba(2,6,23,0.06);
+	backdrop-filter: blur(6px) saturate(120%);
+}
+
+/* calculator buttons: colorful but clear */
+.calc-btn{padding:12px;border-radius:12px;border:none;font-weight:700;transition:transform .08s ease, box-shadow .12s ease, opacity .12s ease}
+.calc-btn{box-shadow: 0 6px 18px rgba(16,24,40,0.06)}
+.calc-btn:hover{transform:translateY(-3px)}
+
+/* numeric buttons: gentle pastel */
+.calc-btn:not([data-val="+"]):not([data-val="-"]):not([data-val="*"]):not([data-val="/"]):not(#equals):not(#clear):not(#back){
+	background: linear-gradient(180deg,#ffffff,#f7fbff);
+	color:#0b1220;
+}
+
+/* operator buttons: blue */
+[data-val="+"][class*="calc-btn"], [data-val="-"][class*="calc-btn"], [data-val="*"][class*="calc-btn"], [data-val="/"][class*="calc-btn"]{
+	background: linear-gradient(135deg,#60a5fa 0%, #3b82f6 100%);
+	color: white;
+	box-shadow: 0 8px 20px rgba(59,130,246,0.18);
+}
+
+/* equals: green gradient */
+#equals{
+	background: linear-gradient(135deg,#34d399 0%, #10b981 100%);
+	color:white; box-shadow: 0 10px 28px rgba(16,185,129,0.18)
+}
+
+/* clear and back: warm tones */
+#clear{background: linear-gradient(135deg,#ff7ab6 0%, #ff5a5f 100%); color:white;}
+#back{background: linear-gradient(135deg,#ffd166 0%, #ffb86b 100%); color:#422800}
+
+/* utility buttons (convert, age, find) */
+#uc-convert, #age-calc, #dd-find{background: linear-gradient(135deg,#7c3aed 0%, #4f46e5 100%); color:white; box-shadow:0 8px 20px rgba(79,70,229,0.16)}
+#dd-now, #uc-copy, #age-copy, #dd-copy{background: linear-gradient(135deg,#06b6d4 0%, #0891b2 100%); color:white}
+
+/* small button hover tweaks */
+#uc-convert:hover, #age-calc:hover, #dd-find:hover, #dd-now:hover, #uc-copy:hover, #age-copy:hover, #dd-copy:hover{transform:translateY(-3px)}
+
+/* make history items colorful on hover */
+.history-item:hover{background:linear-gradient(90deg, rgba(59,130,246,0.06), rgba(99,102,241,0.04));}
+
+/* subtle focus outline for accessibility */
+button:focus, input:focus, select:focus{outline:3px solid rgba(59,130,246,0.12);outline-offset:2px}
+
+/* Date/Day details list styles */
+#dd-details{list-style:none;padding:0;margin:0}
+#dd-details li{background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,255,0.85));padding:8px 10px;border-radius:8px;border:1px solid rgba(15,23,42,0.04)}
+
+
+

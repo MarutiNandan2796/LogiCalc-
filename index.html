@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>All-in-One Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="bg-white/60 backdrop-blur-sm sticky top-0 z-10">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-semibold">All-in-One Calculator</h1>
+        <p class="text-sm text-slate-500 mt-1">Calculator • Unit Converter • Age Calculator • Date / Day Finder</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700">
+          <!-- sun/moon icon (will switch via JS) -->
+          <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-11H21M3 12H2m15.364 6.364l-.707.707M6.343 6.343l-.707.707m12.728 0l-.707-.707M6.343 17.657l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+    <section id="calculator" class="md:col-span-2 bg-white rounded-xl shadow p-4 hover:shadow-lg transition-shadow duration-200">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-medium">Calculator</h2>
+        <div class="text-sm text-slate-500">Keyboard: numbers and +-*/(). Enter = evaluate</div>
+      </div>
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="md:col-span-2">
+          <input id="calc-display" class="w-full rounded-md border border-slate-200 p-3 text-right text-2xl font-mono bg-slate-50 dark:bg-slate-800 dark:text-white" readonly />
+          <div class="grid grid-cols-4 gap-3 mt-4">
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val="7">7</button>
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val="8">8</button>
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val="9">9</button>
+            <button class="calc-btn bg-blue-50 text-blue-600 relative overflow-hidden" data-val="/">÷</button>
+
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val="4">4</button>
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val="5">5</button>
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val="6">6</button>
+            <button class="calc-btn bg-blue-50 text-blue-600 relative overflow-hidden" data-val="*">×</button>
+
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val="1">1</button>
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val="2">2</button>
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val="3">3</button>
+            <button class="calc-btn bg-blue-50 text-blue-600 relative overflow-hidden" data-val="-">−</button>
+
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val="0">0</button>
+            <button class="calc-btn bg-slate-100 hover:bg-slate-200 relative overflow-hidden" data-val=".">.</button>
+            <button id="equals" class="calc-btn bg-blue-600 text-white relative overflow-hidden">=</button>
+            <button class="calc-btn bg-blue-50 text-blue-600 relative overflow-hidden" data-val="+">+</button>
+
+            <button id="clear" class="col-span-2 calc-btn bg-red-50 text-red-600 relative overflow-hidden">C</button>
+            <button id="back" class="col-span-2 calc-btn bg-yellow-50 text-yellow-700 relative overflow-hidden">⌫</button>
+          </div>
+        </div>
+
+        <!-- history panel -->
+        <aside id="calc-history" class="bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-100 p-3">
+          <div class="flex items-center justify-between mb-2">
+            <div class="text-sm text-slate-700 dark:text-slate-300">History</div>
+            <div class="flex items-center gap-2">
+              <button id="history-clear" class="text-xs text-red-600 hover:underline">Clear</button>
+            </div>
+          </div>
+          <ul id="history-list" class="space-y-2 text-sm text-slate-700 dark:text-slate-300 max-h-56 overflow-auto"></ul>
+          <div class="text-xs text-slate-400 mt-2">Click an entry to load it into the calculator.</div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="unit-converter" class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-medium">Unit Converter</h2>
+        <div class="text-sm text-slate-500">Live conversion as you type</div>
+      </div>
+      <div class="mt-3 space-y-3">
+        <div class="flex gap-3">
+          <label class="w-28 text-slate-600">Category</label>
+          <select id="uc-category" class="flex-1 rounded-md border p-2">
+            <option value="length">Length</option>
+            <option value="weight">Weight</option>
+            <option value="temperature">Temperature</option>
+          </select>
+        </div>
+
+        <div class="flex gap-3 items-center">
+          <input id="uc-input" type="number" placeholder="Enter value" class="flex-1 rounded-md border p-2" />
+          <select id="uc-from" class="rounded-md border p-2"></select>
+          <div class="text-slate-400">→</div>
+          <select id="uc-to" class="rounded-md border p-2"></select>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button id="uc-convert" class="bg-blue-600 text-white rounded-md px-3 py-2">Convert</button>
+          <div id="uc-result" class="result text-slate-700"></div>
+          <button id="uc-copy" class="ml-auto text-sm text-slate-500 hover:text-slate-700">Copy</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="age-calculator" class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-medium">Age Calculator</h2>
+        <div class="text-sm text-slate-500">Calculate age in years/months/days</div>
+      </div>
+      <div class="mt-3 space-y-3">
+        <div class="flex gap-3 items-center">
+          <label class="w-28 text-slate-600">Birthdate</label>
+          <input id="age-birth" type="date" class="flex-1 rounded-md border p-2" />
+        </div>
+        <div class="flex gap-3 items-center">
+          <label class="w-28 text-slate-600">As of date</label>
+          <input id="age-asof" type="date" class="flex-1 rounded-md border p-2" />
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="age-calc" class="bg-blue-600 text-white rounded-md px-3 py-2">Calculate Age</button>
+          <div id="age-result" class="result text-slate-700"></div>
+          <button id="age-copy" class="ml-auto text-sm text-slate-500 hover:text-slate-700">Copy</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="date-day-finder" class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-medium">+Day Finder</h2>
+        <div class="text-sm text-slate-500">Pick a date, find the weekday</div>
+      </div>
+
+      <!-- Search/Input Section -->
+      <div class="bg-slate-50 rounded-lg p-4 mb-4">
+        <h3 class="text-sm font-semibold text-slate-700 mb-3">Search</h3>
+        
+        <div class="mb-3">
+          <label class="text-xs font-medium text-slate-600 block mb-2">Pick a date</label>
+          <input id="dd-date" type="date" class="w-full rounded-md border p-2 text-sm" />
+        </div>
+
+        <div class="mb-3">
+          <label class="text-xs font-medium text-slate-600 block mb-2">Offset days (e.g. 60)</label>
+          <input id="dd-offset" type="number" min="0" class="w-full rounded-md border p-2 text-sm" value="60" />
+        </div>
+
+  <button id="dd-run" class="w-full bg-blue-600 text-white rounded-md px-4 py-2 font-medium">Compute</button>
+      </div>
+
+      <!-- Answer/Result Section -->
+      <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-4">
+        <h3 class="text-sm font-semibold text-slate-700 mb-3">Answer</h3>
+        
+        <!-- Main Result -->
+        <div id="dd-result" class="text-2xl font-bold text-blue-600 mb-3 min-h-10"></div>
+
+        <!-- Details list -->
+        <ul id="dd-details" class="space-y-2 text-sm text-slate-700 mb-3"></ul>
+
+        <!-- Copy button -->
+        <button id="dd-copy" class="text-sm text-blue-600 hover:text-blue-700 font-medium">📋 Copy Result</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- toast container -->
+  <div id="toast" class="fixed right-6 bottom-6 z-50"></div>
+
+  <footer>
+    <small>Open this file in a browser to use the app.</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
